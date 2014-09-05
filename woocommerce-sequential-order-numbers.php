@@ -5,7 +5,7 @@
  * Description: Provides sequential order numbers for WooCommerce orders
  * Author: SkyVerge
  * Author URI: http://www.skyverge.com
- * Version: 1.3.2
+ * Version: 1.3.3
  *
  * Copyright: (c) 2012-2013 SkyVerge, Inc. (info@skyverge.com)
  *
@@ -36,7 +36,7 @@ $GLOBALS['wc_seq_order_number'] = new WC_Seq_Order_Number();
 class WC_Seq_Order_Number {
 
 	/** version number */
-	const VERSION = "1.3.2";
+	const VERSION = "1.3.3";
 
 	/** version option name */
 	const VERSION_OPTION_NAME = "woocommerce_seq_order_number_db_version";
@@ -53,7 +53,7 @@ class WC_Seq_Order_Number {
 	public function __construct() {
 
 		add_action( 'plugins_loaded', array( $this, 'initialize' ) );
-
+		add_action( 'init',           array( $this, 'load_translation' ) );
 	}
 
 
@@ -98,6 +98,18 @@ class WC_Seq_Order_Number {
 		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
 			$this->install();
 		}
+	}
+
+
+	/**
+	 * Load Translations
+	 *
+	 * @since 1.3.3
+	 */
+	public function load_translation() {
+
+		// localization
+		load_plugin_textdomain( 'woocommerce-sequential-order-numbers', false, dirname( plugin_basename( __FILE__ ) ) . '/i18n/languages' );
 	}
 
 
